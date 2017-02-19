@@ -347,7 +347,7 @@
 							<?php $check_in_data = getService('Check In',$services); ?>
 							<input type="checkbox" data-price="<?php echo $check_in_data->service_price ?>" name="services[]" id="check_in" value="<?php echo $check_in_data->service_id ?>" class="hide">
 							<div class="widget-header">
-								<h5 class="widget-title bigger lighter">Basic Package</h5>
+								<h5 class="widget-title bigger lighter"></h5>
 							</div>
 
 							<div class="widget-body text-center">
@@ -373,7 +373,7 @@
 							<?php $check_out_data = getService('Check Out',$services) ?>
 							<input type="checkbox" data-price="<?php echo $check_out_data->service_price ?>" name="services[]" id="check_out" value="<?php echo $check_out_data->service_id ?>" class="hide">
 							<div class="widget-header">
-								<h5 class="widget-title bigger lighter">Basic Package</h5>
+								<h5 class="widget-title bigger lighter"></h5>
 							</div>
 
 							<div class="widget-body text-center">
@@ -399,7 +399,7 @@
 							<?php $cleaning = getService('Cleaning',$services) ?>
 							<input type="checkbox" data-price="<?php echo $check_out_data->service_price ?>" name="services[]" id="cleaning" value="cleaning" class="hide">
 							<div class="widget-header">
-								<h5 class="widget-title bigger lighter">Basic Package</h5>
+								<h5 class="widget-title bigger lighter"></h5>
 							</div>
 
 							<div class="widget-body text-center">
@@ -407,7 +407,7 @@
 									<i class="ace-icon fa fa-home bigger-500 blue"></i>
 									<hr />
 									<div id="cleaning_price" class="price">
-										$40
+										
 									</div>
 								</div>
 
@@ -425,7 +425,7 @@
 							<?php $loundry = getService('Loundry',$services) ?>
 							<input type="checkbox" data-price="<?php echo $loundry->service_price ?>" name="services[]" id="loundry" value="<?php echo $loundry->service_id ?>" class="hide">
 							<div class="widget-header">
-								<h5 class="widget-title bigger lighter">Basic Package</h5>
+								<h5 class="widget-title bigger lighter"></h5>
 							</div>
 
 							<div class="widget-body text-center">
@@ -469,10 +469,12 @@
 				<p class="text-center col-sm-6 col-sm-offset-3">It is time to choose the right keeper. We picked a few profiles. Rest assured: they all know what hospitality is about</p>
 				<div class="space"></div>
 				<div class="col-xs-12 col-sm-8 col-sm-offset-2 keeper_list">
-					
+    	
 				</div>
 			</form>
 			</div>
+
+
 
 			<div class="step-pane active" data-step="4">
 			<form class="form-horizontal" id="more_info-form" method="get">
@@ -580,7 +582,7 @@
 				
 				<div class="col-xs-12 col-md-8 col-md-offset-2">
 					<div class="row">
-						<div class="col-xs-12 col-sm-4 col-sm-offset-4 text-center">
+						<!-- <div class="col-xs-12 col-sm-4 col-sm-offset-4 text-center">
 							<h3>Pick up date</h3>
 							<div class="input-group">
 								<input id="pick_up_date" name="pick_up_date" type="text" class="form-control" />
@@ -588,7 +590,7 @@
 									<i class="fa fa-clock-o bigger-110"></i>
 								</span>
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="space"></div>
 					<div class="col-xs-6 col-sm-3 col-sm-offset-3 pricing-box">
@@ -882,6 +884,7 @@
 <script src="public/front_end/inc/cookiejs/js.cookie.js"></script>
 
 <script src="assets/js/ace/elements.wizard.js"></script>
+<script src="assets/js/jquery.rateyo.min.js"></script>
 
 <script type="text/javascript">
 
@@ -891,7 +894,7 @@
 		if( ! _address ){
 			window.location = 'site';
 		}
-		setPropertyValue($('#property_size').val());
+		
 
 		$('#property_size').change(function(){
 			setPropertyValue($(this).val());
@@ -904,23 +907,60 @@
 				if( property_val == v.id )
 					res = v.value;
 			});
+			bed_num = $('#number_of_beds').val()*1;
+			bath_num =$('#number_of_bathrooms').val()*1;
+			fee_bed_cost = bed_num-1;
+			fee_bath_cost = bath_num -1;
+			total_clean_fee = fee_bed_cost*10 + fee_bath_cost*20;
+			res = res*1+total_clean_fee;
 			$('#cleaning_price').html(_currency+res);
 			$('#property_size_value').val(res);
 		}
-
+		Time_rate = [
+			'00:00', '00:15','00:30','00:45',
+			'01:00', '01:15','01:30','01:45',
+			'02:00', '02:15','02:30','02:45',
+			'03:00', '03:15','03:30','03:45',
+			'04:00', '04:15','04:30','04:45',
+			'05:00', '05:15','05:30','05:45',
+			'06:00', '06:15','06:30','06:45',
+			'07:00', '07:15','07:30','07:45',
+			'08:00', '08:15','08:30','08:45',
+			'09:00', '09:15','09:30','09:45',
+			'10:00', '10:15','10:30','10:45',
+			'11:00', '11:15','11:30','11:45',
+			'12:00', '12:15','12:30','12:45',
+			'13:00', '13:15','13:30','13:45',
+			'14:00', '14:15','14:30','14:45',
+			'15:00', '15:15','15:30','15:45',
+			'16:00', '16:15','16:30','16:45',
+			'17:00', '17:15','17:30','17:45',
+			'18:00', '18:15','18:30','18:45',
+			'19:00', '19:15','19:30','19:45',
+			'20:00', '20:15','20:30','20:45',
+			'21:00', '21:15','21:30','21:45',
+			'22:00', '22:15','22:30','22:45',
+			'23:00', '23:15','23:30','23:45',
+			]
 		$('#pick_up_date').datetimepicker({
+			allowTimes:Time_rate,
+			format:'d/m/Y H:i',
 			minDate: moment().add(1, 'days')
 		}).next().on(ace.click_event, function(){
 			$(this).prev().focus();
 		});
 
 		$('#key_drop_off_date').datetimepicker({
+			allowTimes:Time_rate,
+			format:'d/m/Y H:i',
 			minDate: moment().add(1, 'days')
 		}).next().on(ace.click_event, function(){
 			$(this).prev().focus();
 		});
 
 		$('#service_date').datetimepicker({
+			allowTimes:Time_rate,
+			format:'d/m/Y H:i',
 			minDate: moment().add(1, 'days')
 		}).next().on(ace.click_event, function(){
 			$(this).prev().focus();
@@ -967,28 +1007,65 @@
 						var html = '';
 						for(var j = 0; j < res.length; j++)
 						{	
-							html += '<div data-id="keeper-'+res[j]['user_id']+'" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">'+
-									'<input class="hide" type="radio" data-fullname="'+res[j]['user_fname']+' '+ res[j]['user_lname']+'" name="keeper_id" id="keeper-'+res[j]['user_id']+'" value="'+res[j]['user_id']+'">'+
-									'<span class="profile-picture">'+
-										'<img id="avatar" class="editable img-responsive" alt="Alexs Avatar" src="assets/uploads/default-avatar.jpg" />'+
-									'</span>'+
-									'<div class="space-4"></div>'+
-									'<div class="width-90 label label-info label-xlg arrowed-in arrowed-in-right">'+
-										'<div class="inline position-relative">'+
-											'<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">'+
-												'<span class="white">'+res[j]['user_fname']+' '+ res[j]['user_lname']+'</span>'+
-											'</a>'+
-										'</div>'+
-									'</div>'+
-								'</div>';
-								
-							
+							res[j].about=res[j].about.replace(/\[/g, '');
+							res[j].about=res[j].about.replace(/\]/g, '');
+							res[j].languages=res[j].languages.replace(/\[/g, '');
+							res[j].languages=res[j].languages.replace(/\]/g, '');
+							console.log(res[j]);
+        					html +='<div class="mt-element-overlay">';
+							html +='    <div class="">';
+							html +='        <div data-id="keeper-'+res[j]['user_id']+'" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">';
+							html +=			'<input class="hide" type="radio" data-fullname="'+res[j]['user_fname']+' '+ res[j]['user_lname']+'" 				name="keeper_id" id="keeper-'+res[j]['user_id']+'" value="'+res[j]['user_id']+'">';
+							html +='            <div class="mt-overlay-3 mt-overlay-3-icons"><span class="profile-picture">';
+							html +='                <img alt="No Picture" src="'+res[j]['avatar']+'">';
+							html +='                <div class="mt-overlay">';
+							html +='                    <ul class="mt-info">';
+							html +='                        <li>';
+							html +='                            <p>Description:'+res[j]['about']+'</p>';
+							html +='                        </li>';
+							html +='                        <li>';
+							html +='                            <p>Languages spoken:'+res[j]['languages']+'</p>';
+							html +='                        </li>';
+							html +='                        <li>';
+							html +='                           <div class="rateYo" data-value="'+res[j]['user_level']+'"></div>';
+							html +='                        </li>';
+
+
+							html +='                    </ul>';
+							html +='                </div>';
+							html +='            </span>	<div class=" margin-bottom-5 width-90 label label-info label-xlg arrowed-in arrowed-in-right"><div class="inline position-relative"><a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown"><span class="white">'+res[j]['user_fname']+' '+ res[j]['user_lname']+'</span></a></div</div></div>';
+							html +='        </div>';
+							html +='    </div>';
+							html +='</div>  ';
+
+							// html += '<div data-id="keeper-'+res[j]['user_id'] class=" keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">'+
+							// 		'<input class="hide" type="radio" data-fullname="'+res[j]['user_fname']+' '+ res[j]['user_lname']+'" name="keeper_id" id="keeper-'+res[j]['user_id']+'" value="'+res[j]['user_id']+'">'+
+							// 		'<span class="profile-picture">'+
+							// 			'<img id="avatar" class="editable img-responsive" alt="Alexs Avatar" src="assets/uploads/default-avatar.jpg" />'+
+							// 		'</span>'+
+							// 		'<div class="space-4"></div>'+
+									// '<div class="width-90 label label-info label-xlg arrowed-in arrowed-in-right">'+
+									// 	'<div class="inline position-relative">'+
+									// 		'<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">'+
+									// 			'<span class="white">'+res[j]['user_fname']+' '+ res[j]['user_lname']+'</span>'+
+									// 		'</a>'+
+									// 	'</div>'+
+									// '</div>'+
+							// 	'</div>';
 						}
 					}
 					else{
 						html =  '<div class="col-xs-12 text-center text-danger bigger-120">No Keepers Available right Now! <br> <a href="site#contact-us" class="btn btn-primary">Contact us</a></div>';
 					}
 					$('.keeper_list').html(html);
+					$('.rateYo').each(function(){
+						var star_rate = $(this).data('value');
+						$(this).rateYo({
+						rating: star_rate,
+						readOnly: true
+					});	
+					})
+					// $('.keeper').popover();
 				}
 			});
 		})	
@@ -1006,7 +1083,10 @@
 				console.log(data);
 			},'json');*/
 			if(info.step == 1 && info.direction == 'next') {				
-				if(!$('#personal_info-form').valid()) e.preventDefault();
+				if(!$('#personal_info-form').valid()){
+				e.preventDefault();
+				} 
+				setPropertyValue($('#property_size').val());
 			}else if(info.step == 2 && info.direction == 'next'){
 				
 				if(!$('#services-form').valid())
@@ -1192,7 +1272,7 @@
 		});
 
 		$.mask.definitions['~']='[+-]';
-		$('#phone, #guest_phone').mask('(999) 999-9999');
+		$('#phone, #guest_phone').mask('(049) 999-9999');
 
 		jQuery.validator.addMethod("phone", function (value, element) {
 			return this.optional(element) || /^\(\d{3}\) \d{3}\-\d{4}( x\d{1,6})?$/.test(value);
@@ -1613,12 +1693,16 @@
 			});
 
 			$('#key_pick_up_from').datetimepicker({
+				allowTimes:Time_rate,
+				format:'d/m/Y H:i',
 				minDate: moment().add(1, 'days')
 			}).next().on(ace.click_event, function(){
 				$(this).prev().focus();
 			});
 
 			$('#key_pick_up_to').datetimepicker({
+				allowTimes:Time_rate,
+				format:'d/m/Y H:i',
 				minDate: moment().add(1, 'days')
 			}).next().on(ace.click_event, function(){
 				$(this).prev().focus();

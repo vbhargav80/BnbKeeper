@@ -29,6 +29,8 @@ class Steps extends CI_Controller {
 		// $data['style'][] = 'assets/css/bootstrap-datetimepicker.css';
 
 		$data['style'][] = 'assets/css/jquery.datetimepicker.min.css';	
+		$data['style'][] = 'assets/css/components.css';	
+		$data['style'][] = 'assets/css/jquery.rateyo.min.css';	
 		$data['keepers'] = $this->getKeepers();
 		$data['properties'] = $this->getProperty();
 		$data['services'] = $this->getServices();
